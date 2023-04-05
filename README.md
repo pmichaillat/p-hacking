@@ -30,15 +30,10 @@ The figure-producing scripts call the helper script `formatPlot.m` to customize 
 
 ## Figures
 
-The 6 figures produced by the code are stored in the folder `figures`, both as PDF files and as Excel files.
+The 6 figures produced by the code are stored in the folder `figures`.
 
-### PDF files
-
-The figures are saved as PDF files and stored in the subfolder `pdf`. Any PDF file titled `figureX.pdf` corresponds to figure X in the paper.
-
-### Excel files
-
-The data underlying the figures are saved as Excel files and stored in the subfolder `xlsx`. Any Excel file titled `figureX.xlsx` contains the data plotted in figure X in the paper.
++ The figures are saved as PDF files and stored in the subfolder `pdf`. Any PDF file titled `figureX.pdf` corresponds to figure X in the paper.
++ The data underlying the figures are saved as Excel files and stored in the subfolder `xlsx`. Any Excel file titled `figureX.xlsx` contains the data plotted in figure X in the paper.
 
 ## Software
 
