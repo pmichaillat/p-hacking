@@ -6,11 +6,6 @@ This repository contains the code and data accompanying the paper "Critical Valu
 
 The paper is available at https://pascalmichaillat.org/12/.
 
-## Data
-
-<!-- The data on the lifecycle of scientific studies used to produce table 1 are stored in the Excel file `table1.xlsx`, which is placed in the folder `data`.  -->
-The data on the lifecycle of scientific studies used to calibrate the completion probability are stored in the Excel file `completion.xlsx`, which is placed in the folder `data`. 
-
 ## Code
 
 The Matlab code used to produce the results in the paper is placed in the folder `code`. 
