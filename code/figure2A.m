@@ -22,11 +22,11 @@ clc
 significance = 0.05;
 
 % Completion probability
-completion = [0:0.01:1];
-completionMedian = 0.8;
+completionArray = [0:0.01:1];
+completion = 0.8;
 
-% Index of median completion probability in completion array
-iMedian = find(completion == completionMedian);
+% Index of completion probability in completion array
+iCompletion = find(completionArray == completion);
 
 %% Define inverse survival function for the standard normal distribution
 
@@ -34,8 +34,8 @@ Z = @(x) norminv(1-x);
 
 %% Compute robust critical value from proposition 3
 
-critical = Z(significance .* (1 - completion) ./ (1 - (significance .* completion)));
-criticalMedian = critical(iMedian);
+criticalArray = Z(significance .* (1 - completionArray) ./ (1 - (significance .* completionArray)));
+critical = criticalArray(iCompletion);
 
 %% Format plot
 
@@ -48,11 +48,11 @@ clf
 hold on
 
 % Plot robust critical value
-plot(completion, critical, purpleSetting{:})
-plot(completionMedian, criticalMedian, scatterSetting{:})
+plot(completionArray, criticalArray, purpleProperties{:})
+plot(completion, critical, scatterProperties{:})
 
 % Populate axes
-set(gca, xSetting{:})
+set(gca, xProperties{:})
 set(gca, 'yLim', [1.64, 3.2], 'yTick', [1.64, 1.96, 2.3:0.3:3.2])
 xlabel('Completion probability')
 ylabel('Robust critical value')
@@ -70,5 +70,5 @@ header = {'Completion probability', 'Robust critical value'};
 writecell(header, file, 'Sheet', sheet, 'WriteMode', 'replacefile')
 
 % Write results
-result = [completion', critical'];
+result = [completionArray', criticalArray'];
 writematrix(result, file, 'Sheet', sheet, 'WriteMode', 'append')

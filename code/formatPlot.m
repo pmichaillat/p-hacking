@@ -6,20 +6,20 @@
 %
 % This script formats plots by setting default properties for figures and axes. 
 %
-% The script also defines settings to format line plots and scatter plots. Each setting is contained in a cell array:
+% The script also predefines properties that can be used to format line plots and scatter plots. Each set of properties is contained in a cell array:
 %
-% * purpleSetting – Settings for regular purple line
-% * graySetting – Settings for thin gray line
-% * xSetting – Settings for x-axis of line plot
-% * scatterSetting – Settings for scatter plot
+% * purpleProperties – Properties for regular purple line
+% * grayProperties – Properties for thin gray line
+% * xProperties – Properties for x-axis of line plot
+% * scatterProperties – Properties for scatter plot
 %
 % Finally, the script defines a color palette composed of purple, pink, and gray. Each color is specified in hexadecimal format (hex triplet) and encoded as a string.
 %
 %% Examples
 %
-%   plot(x, y, purpleSetting{:})
-%   plot(x, y, scatterSetting{:})
-%   set(gca, xSetting{:})
+%   plot(x, y, purpleProperties{:})
+%   plot(x, y, scatterProperties{:})
+%   set(gca, xProperties{:})
 %
 
 %% Set default properties for figures
@@ -53,28 +53,28 @@ purple = '#7570b3';
 pink = '#e7298a';
 gray = '#bfbfbf';
 
-%% Settings for line plots
+%% Predefine properties for line plots
 
 % Purple line
-purpleSetting.Color = purple;
-purpleSetting.LineWidth = 3;
-purpleSetting = [fieldnames(purpleSetting), struct2cell(purpleSetting)]';
+purpleProperties.Color = purple;
+purpleProperties.LineWidth = 3;
+purpleProperties = [fieldnames(purpleProperties), struct2cell(purpleProperties)]';
 
 % Gray line
-graySetting.Color = gray;
-graySetting.LineWidth = 1;
-graySetting = [fieldnames(graySetting), struct2cell(graySetting)]';
+grayProperties.Color = gray;
+grayProperties.LineWidth = 1;
+grayProperties = [fieldnames(grayProperties), struct2cell(grayProperties)]';
 
 % X-axis
-xSetting.XLim = [0, 1];
-xSetting.XTick = [0:0.2:1];
-xSetting = [fieldnames(xSetting), struct2cell(xSetting)]';
+xProperties.XLim = [0, 1];
+xProperties.XTick = [0:0.2:1];
+xProperties = [fieldnames(xProperties), struct2cell(xProperties)]';
 
-%% Settings for scatter plots
+%% Predefine properties for scatter plots
 
-scatterSetting.MarkerFaceColor = pink;
-scatterSetting.MarkerEdgeColor = pink;
-scatterSetting.LineStyle = 'none';
-scatterSetting.Marker = 'o';
-scatterSetting.MarkerSize = 15;
-scatterSetting = [fieldnames(scatterSetting), struct2cell(scatterSetting)]';
+scatterProperties.MarkerFaceColor = pink;
+scatterProperties.MarkerEdgeColor = pink;
+scatterProperties.LineStyle = 'none';
+scatterProperties.Marker = 'o';
+scatterProperties.MarkerSize = 15;
+scatterProperties = [fieldnames(scatterProperties), struct2cell(scatterProperties)]';

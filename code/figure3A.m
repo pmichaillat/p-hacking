@@ -22,16 +22,16 @@ clc
 significance = 0.05;
 
 % Completion probability
-completion = [0:0.01:1];
-completionMedian = 0.8;
+completionArray = [0:0.01:1];
+completion = 0.8;
 
-% Index of median completion probability in completion array
-iMedian = find(completion == completionMedian);
+% Index of completion probability in completion array
+iCompletion = find(completionArray == completion);
 
-%% Compute average number of experiments from corrolary 3
+%% Compute average number of experiments from corollary 3
 
-experiments = (1 - (significance .* completion)) ./ (1 - completion);
-experimentsMedian = experiments(iMedian);
+experimentsArray = (1 - (significance .* completionArray)) ./ (1 - completionArray);
+experiments = experimentsArray(iCompletion);
 
 %% Format plot
 
@@ -44,11 +44,11 @@ clf
 hold on
 
 % Plot average number of experiments
-plot(completion, experiments, purpleSetting{:})
-plot(completionMedian, experimentsMedian, scatterSetting{:})
+plot(completionArray, experimentsArray, purpleProperties{:})
+plot(completion, experiments, scatterProperties{:})
 
 % Populate axes
-set(gca, xSetting{:})
+set(gca, xProperties{:})
 set(gca,'yLim',[1,11],'yTick',[1:2:11])
 xlabel('Completion probability')
 ylabel('Experiments')
@@ -66,5 +66,5 @@ header = {'Completion probability', 'Number of experiments'};
 writecell(header, file, 'Sheet', sheet, 'WriteMode', 'replacefile')
 
 % Write results
-result = [completion', experiments'];
+result = [completionArray', experimentsArray'];
 writematrix(result, file, 'Sheet', sheet, 'WriteMode', 'append')

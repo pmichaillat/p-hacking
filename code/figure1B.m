@@ -22,16 +22,16 @@ clc
 significance = 0.05;
 
 % Completion probability
-completion = [0:0.01:1];
-completionMedian = 0.8;
+completionArray = [0:0.01:1];
+completion = 0.8;
 
-% Index of median completion probability in completion array
-iMedian = find(completion == completionMedian);
+% Index of completion probability in completion array
+iCompletion = find(completionArray == completion);
 
-%% Compute type 1 error rate from proposition 2
+%% Compute type 1 error rate from corollary 2
 
-type1 = significance ./(1 - (1 - significance) .* completion);
-type1Median = type1(iMedian);
+type1Array = significance ./(1 - (1 - significance) .* completionArray);
+type1 = type1Array(iCompletion);
 
 %% Format plot
 
@@ -44,11 +44,11 @@ clf
 hold on
 
 % Plot type 1 error rate
-plot(completion, type1, purpleSetting{:})
-plot(completionMedian, type1Median, scatterSetting{:})
+plot(completionArray, type1Array, purpleProperties{:})
+plot(completion, type1, scatterProperties{:})
 
 % Populate axes
-set(gca, xSetting{:})
+set(gca, xProperties{:})
 set(gca,'yLim',[0.05,1],'yTick',[0.05,0.2:0.2:1],'yTickLabel',['  5%';' 20%';' 40%';' 60%';' 80%';'100%'])
 xlabel('Completion probability')
 ylabel('Type 1 error rate')
@@ -66,5 +66,5 @@ header = {'Completion probability', 'Type 1 error rate'};
 writecell(header, file, 'Sheet', sheet, 'WriteMode', 'replacefile')
 
 % Write results
-result = [completion', type1'];
+result = [completionArray', type1Array'];
 writematrix(result, file, 'Sheet', sheet, 'WriteMode', 'append')

@@ -4,7 +4,7 @@
 %
 %% Description
 %
-% This script produces figure 3B. The figure plots the average number of experiments run by a scientist who is p-hacking when significance is determined by robust critical values against the average number of experiments run by a scientist who is p-hacking when significance is determined by classical critical values. The average numbers of experiments are computed under the null hypothesis for a broad range of completion probabilities. The significance level is set to 5%. 
+% This script produces figure 3B. The figure plots the average number of experiments run by a scientist who is p-hacking when significance is determined by robust critical values against the average number of experiments run by a scientist who is p-hacking when significance is determined by classical critical values. The average numbers of experiments are computed under the null hypothesis for a broad range of completionArray probabilities. The significance level is set to 5%. 
 % 
 %% Output
 %
@@ -22,21 +22,21 @@ clc
 significance = 0.05;
 
 % Completion probability
-completion = [0:0.01:1];
-completionMedian = 0.8;
+completionArray = [0:0.01:1];
+completion = 0.8;
 
-% Index of median completion probability in completion array
-iMedian = find(completion == completionMedian);
+% Index of completion probability in completion array
+iCompletion = find(completionArray == completion);
 
 %% Compute average number of experiments under classical critical value from corrolary 1
 
-experimentsClassical = 1./(1 - (1 - significance) .* completion);
-experimentsClassicalMedian = experimentsClassical(iMedian);
+experimentsClassicalArray = 1./(1 - (1 - significance) .* completionArray);
+experimentsClassical = experimentsClassicalArray(iCompletion);
 
 %% Compute average number of experiments under robust critical value from corrolary 3
 
-experimentsRobust = (1 - (significance .* completion)) ./ (1 - completion);
-experimentsRobustMedian = experimentsRobust(iMedian);
+experimentsRobustArray = (1 - (significance .* completionArray)) ./ (1 - completionArray);
+experimentsRobust = experimentsRobustArray(iCompletion);
 
 %% Format plot
 
@@ -49,9 +49,9 @@ clf
 hold on
 
 % Plot average numbers of experiments
-plot(experimentsClassical, experimentsRobust, purpleSetting{:})
-plot(experimentsClassicalMedian, experimentsRobustMedian, scatterSetting{:})
-plot([0:0.1:20], [0:0.1:20], graySetting{:})
+plot(experimentsClassicalArray, experimentsRobustArray, purpleProperties{:})
+plot(experimentsClassical, experimentsRobust, scatterProperties{:})
+plot([0:0.1:20], [0:0.1:20], grayProperties{:})
 
 % Populate axes
 set(gca, 'xLim', [1,11], 'xTick', [1:2:11])
@@ -72,5 +72,5 @@ header = {'Completion probability', 'Number of experiments under classical criti
 writecell(header, file, 'Sheet', sheet, 'WriteMode', 'replacefile')
 
 % Write results
-result = [completion', experimentsClassical', experimentsRobust'];
+result = [completionArray', experimentsClassicalArray', experimentsRobustArray'];
 writematrix(result, file, 'Sheet', sheet, 'WriteMode', 'append')
