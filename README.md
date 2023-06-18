@@ -8,7 +8,7 @@ The paper is available at https://pascalmichaillat.org/12/.
 
 ## Code
 
-The Matlab code used to produce the results in the paper is placed in the folder `code`. 
+The MATLAB code used to produce the results in the paper is placed in the folder `code`. 
 
 To produce the figures in the paper, run the following scripts:
 
@@ -19,7 +19,7 @@ To produce the figures in the paper, run the following scripts:
 + `figure3A.m` - Produce figure 3A
 + `figure3B.m` - Produce figure 3B
 
-Each script produces a figure in a Matlab window, saves a copy of the figure in PDF format, and saves a copy of the data plotted in the figure in an Excel file.
+Each script produces a figure in a MATLAB window, saves a copy of the figure in PDF format, and saves a copy of the data plotted in the figure in an Excel file.
 
 The figure-producing scripts call the helper script `formatPlot.m` to customize the appearance of plots.
 
@@ -32,7 +32,7 @@ The 6 figures produced by the code are stored in the folder `figures`.
 
 ## Software
 
-The results were obtained on a Mac running macOS Ventura 13.2 with Matlab R2022b and Microsoft Excel 16.71.
+The results were obtained on a Mac running macOS Ventura 13.2 with MATLAB R2022b and Microsoft Excel 16.71.
 
 ## License
 
