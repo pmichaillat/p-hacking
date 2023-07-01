@@ -1,6 +1,6 @@
 # Critical Values Robust to P-hacking: Code and Data
 
-This repository contains the code and data accompanying the paper "Critical Values Robust to P-hacking", written by [Adam McCloskey](https://adammccloskey.com) and [Pascal Michaillat](https://pascalmichaillat.org), and posted on [arXiv](https://doi.org/10.48550/arXiv.2005.04141) in May 2023.
+This repository contains the code and data accompanying the paper "Critical Values Robust to P-hacking", written by [Adam McCloskey](https://adammccloskey.com) and [Pascal Michaillat](https://pascalmichaillat.org), and posted on [arXiv](https://doi.org/10.48550/arXiv.2005.04141) in July 2023.
 
 ## Paper webpage
 
@@ -8,9 +8,9 @@ The paper is available at https://pascalmichaillat.org/12/.
 
 ## Code
 
-The MATLAB code used to produce the results in the paper is placed in the folder `code`. 
+The results in the paper are produced with MATLAB code. The code is stored in the folder `code`. 
 
-To produce the figures in the paper, run the following scripts:
+The figures in the paper are produced by the following scripts:
 
 + `figure1A.m` – Produce figure 1A
 + `figure1B.m` - Produce figure 1B
