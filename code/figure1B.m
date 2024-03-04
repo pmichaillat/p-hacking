@@ -4,67 +4,66 @@
 %
 %% Description
 %
-% This script produces figure 1B. The figure displays the type 1 error rate for hypothesis tests conducted by a scientist who is p-hacking, when significance is determined by classical critical values. The type 1 error rate is displayed as a function of the probability of completing an experiment. The significance level is set to 5%.
+% This script produces figure 1B. The figure displays the probability of type 1 error for an hypothesis test reported by a p-hacker when significance is determined by a classical critical value, as a function of the probability of completing an experiment. The significance level is set to 5%.
 % 
 %% Output
 %
 % * The figure is saved as figure1B.pdf.
-% * The underlying data are saved in figure1B.xlsx.
+% * The underlying data are saved in figure1B.csv.
 %
 
-close all
 clear
-clc
 
 %% Calibrate model parameters
 
 % Significance level
-significance = 0.05;
+alpha = 0.05;
 
-% Completion probability
-completionArray = [0:0.01:1];
-completion = 0.8;
+% Range of completion probabilities
+gammaArray = [0:0.01:0.99, 0.9999];
 
-% Index of completion probability in completion array
-iCompletion = find(completionArray == completion);
+% Calibrated completion probability
+gamma = 0.8;
 
-%% Compute type 1 error rate from corollary 2
+% Index of calibrated completion probability in array
+iGamma = find(gammaArray == gamma);
 
-type1Array = significance ./(1 - (1 - significance) .* completionArray);
-type1 = type1Array(iCompletion);
+%% Apply equation (7) to compute the probability of type 1 error
 
-%% Format plot
+errorArray = alpha ./ (1 - (1 - alpha) .* gammaArray);
+error = errorArray(iGamma);
 
-formatPlot
+%% Format figure, axes, and plot
+
+visualDisplay
 
 %% Produce figure
 
-figure(1)
+figure(2)
 clf
 hold on
 
-% Plot type 1 error rate
-plot(completionArray, type1Array, purpleProperties{:})
-plot(completion, type1, scatterProperties{:})
+% Plot probability of type 1 error
+plot(gammaArray, errorArray, blackLine{:})
+plot(gamma, error, blackDot{:})
 
 % Populate axes
-set(gca, xProperties{:})
-set(gca,'yLim',[0.05,1],'yTick',[0.05,0.2:0.2:1],'yTickLabel',['  5%';' 20%';' 40%';' 60%';' 80%';'100%'])
+set(gca, gammaAxis{:})
+set(gca, 'yLim', [0.05,1], 'yTick', [0.05,0.2:0.2:1], 'yTickLabel', ['  5%';' 20%';' 40%';' 60%';' 80%';'100%'])
 xlabel('Completion probability')
-ylabel('Type 1 error rate')
+ylabel('Probability of type 1 error')
 
 % Print figure
 print('-dpdf','figure1B.pdf')
 
-%% Save results
+%% Save data
 
-file = 'figure1B.xlsx';
-sheet = 'Figure 1B';
+file = 'figure1B.csv';
 
 % Write header
-header = {'Completion probability', 'Type 1 error rate'};
-writecell(header, file, 'Sheet', sheet, 'WriteMode', 'replacefile')
+header = {'Completion probability', 'Probability of type 1 error'};
+writecell(header, file, 'WriteMode', 'overwrite')
 
 % Write results
-result = [completionArray', type1Array'];
-writematrix(result, file, 'Sheet', sheet, 'WriteMode', 'append')
+result = [gammaArray', errorArray'];
+writematrix(result, file, 'WriteMode', 'append')

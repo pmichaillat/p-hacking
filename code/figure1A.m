@@ -4,38 +4,38 @@
 %
 %% Description
 %
-% This script produces figure 1A. The figure displays the average number of experiments run by a scientist who is p-hacking, when significance is determined by classical critical values. The average number of experiments is computed under the null hypothesis and displayed as a function of the probability of completing an experiment. The significance level is set to 5%. 
+% This script produces figure 1A. The figure displays the expected number of experiments run by a p-hacker when significance is determined by a classical critical value, as a function of the probability of completing an experiment. Expectations are taken under the null hypothesis. The significance level is set to 5%. 
 % 
 %% Output
 %
 % * The figure is saved as figure1A.pdf.
-% * The underlying data are saved in figure1A.xlsx.
+% * The underlying data are saved in figure1A.csv.
 %
 
-close all
 clear
-clc
 
 %% Calibrate model parameters
 
 % Significance level
-significance = 0.05;
+alpha = 0.05;
 
-% Completion probability
-completionArray = [0:0.01:1];
-completion = 0.8;
+% Range of completion probabilities
+gammaArray = [0:0.01:0.99, 0.9999];
 
-% Index of completion probability in completion array
-iCompletion = find(completionArray == completion);
+% Calibrated completion probability
+gamma = 0.8;
 
-%% Compute average number of experiments from corollary 1
+% Index of calibrated completion probability in array
+iGamma = find(gammaArray == gamma);
 
-experimentsArray = 1./(1 - (1 - significance) .* completionArray);
-experiments = experimentsArray(iCompletion);
+%% Apply equation (4) to compute the expected number of experiments
 
-%% Format plot
+NArray = 1./(1 - (1 - alpha) .* gammaArray);
+N = NArray(iGamma);
 
-formatPlot
+%% Format figure, axes, and plot
+
+visualDisplay
 
 %% Produce figure
 
@@ -43,28 +43,27 @@ figure(1)
 clf
 hold on
 
-% Plot average number of experiments
-plot(completionArray, experimentsArray, purpleProperties{:})
-plot(completion, experiments, scatterProperties{:})
+% Plot expected number of experiments
+plot(gammaArray, NArray, blackLine{:})
+plot(gamma, N, blackDot{:})
 
 % Populate axes
-set(gca, xProperties{:})
-set(gca,'yLim',[1,11],'yTick',[1:2:11])
+set(gca, gammaAxis{:})
+set(gca, 'yLim', [1,11], 'yTick', [1:2:11])
 xlabel('Completion probability')
-ylabel('Experiments')
+ylabel('Expected number of experiments')
 
 % Print figure
 print('-dpdf','figure1A.pdf')
 
-%% Save results
+%% Save data
 
-file = 'figure1A.xlsx';
-sheet = 'Figure 1A';
+file = 'figure1A.csv';
 
 % Write header
-header = {'Completion probability', 'Number of experiments'};
-writecell(header, file, 'Sheet', sheet, 'WriteMode', 'replacefile')
+header = {'Completion probability', 'Expected number of experiments'};
+writecell(header, file, 'WriteMode', 'overwrite')
 
 % Write results
-result = [completionArray', experimentsArray'];
-writematrix(result, file, 'Sheet', sheet, 'WriteMode', 'append')
+result = [gammaArray', NArray'];
+writematrix(result, file, 'WriteMode', 'append')

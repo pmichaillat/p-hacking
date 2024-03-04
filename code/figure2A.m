@@ -4,55 +4,55 @@
 %
 %% Description
 %
-% This script produces figure 2A. The figure displays the critical value robust to p-hacking for a one-sided z-test with 5% significance level. The robust critical value is displayed as a function of the probability of completing an experiment.
+% This script produces figure 2A. The figure displays the critical value robust to p-hacking for a one-sided z-test with 5% significance level, as a function of the probability of completing an experiment.
 % 
 %% Output
 %
 % * The figure is saved as figure2A.pdf.
-% * The underlying data are saved in figure2A.xlsx.
+% * The underlying data are saved in figure2A.csv.
 %
 
-close all
 clear
-clc
 
 %% Calibrate model parameters
 
 % Significance level
-significance = 0.05;
+alpha = 0.05;
 
-% Completion probability
-completionArray = [0:0.01:1];
-completion = 0.8;
+% Range of completion probabilities
+gammaArray = [0:0.01:0.99, 0.9999];
 
-% Index of completion probability in completion array
-iCompletion = find(completionArray == completion);
+% Calibrated completion probability
+gamma = 0.8;
 
-%% Define inverse survival function for the standard normal distribution
+% Index of calibrated completion probability in array
+iGamma = find(gammaArray == gamma);
+
+%% Introduce inverse survival function for the standard normal distribution
 
 Z = @(x) norminv(1-x);
 
-%% Compute robust critical value from proposition 3
+%% Apply equation (9) to compute the robust critical value
 
-criticalArray = Z(significance .* (1 - completionArray) ./ (1 - (significance .* completionArray)));
-critical = criticalArray(iCompletion);
+zStarArray = Z(alpha .* (1 - gammaArray) ./ (1 - (alpha .* gammaArray)));
+zStar = zStarArray(iGamma);
 
-%% Format plot
+%% Format figure, axes, and plot
 
-formatPlot
+visualDisplay
 
 %% Produce figure
 
-figure(1)
+figure(3)
 clf
 hold on
 
 % Plot robust critical value
-plot(completionArray, criticalArray, purpleProperties{:})
-plot(completion, critical, scatterProperties{:})
+plot(gammaArray, zStarArray, blackLine{:})
+plot(gamma, zStar, blackDot{:})
 
 % Populate axes
-set(gca, xProperties{:})
+set(gca, gammaAxis{:})
 set(gca, 'yLim', [1.64, 3.2], 'yTick', [1.64, 1.96, 2.3:0.3:3.2])
 xlabel('Completion probability')
 ylabel('Robust critical value')
@@ -60,15 +60,14 @@ ylabel('Robust critical value')
 % Print figure
 print('-dpdf','figure2A.pdf')
 
-%% Save results
+%% Save data
 
-file = 'figure2A.xlsx';
-sheet = 'Figure 2A';
+file = 'figure2A.csv';
 
 % Write header
 header = {'Completion probability', 'Robust critical value'};
-writecell(header, file, 'Sheet', sheet, 'WriteMode', 'replacefile')
+writecell(header, file, 'WriteMode', 'overwrite')
 
 % Write results
-result = [completionArray', criticalArray'];
-writematrix(result, file, 'Sheet', sheet, 'WriteMode', 'append')
+result = [gammaArray', zStarArray'];
+writematrix(result, file, 'WriteMode', 'append')

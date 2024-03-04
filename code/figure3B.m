@@ -4,73 +4,74 @@
 %
 %% Description
 %
-% This script produces figure 3B. The figure plots the average number of experiments run by a scientist who is p-hacking when significance is determined by robust critical values against the average number of experiments run by a scientist who is p-hacking when significance is determined by classical critical values. The average numbers of experiments are computed under the null hypothesis for a broad range of completionArray probabilities. The significance level is set to 5%. 
+% This script produces figure 3B. The figure displays the expected number of experiments run by a p-hacker when significance is determined by a robust critical value against the expected number of experiments run by a p-hacker when significance is determined by a classical critical value. Expectations are taken under the null hypothesis. The significance level is set to 5%. 
 % 
 %% Output
 %
 % * The figure is saved as figure3B.pdf.
-% * The underlying data are saved in figure3B.xlsx.
+% * The underlying data are saved in figure3B.csv.
 %
 
-close all
 clear
-clc
 
 %% Calibrate model parameters
 
 % Significance level
-significance = 0.05;
+alpha = 0.05;
 
-% Completion probability
-completionArray = [0:0.01:1];
-completion = 0.8;
+% Range of completion probabilities
+gammaArray = [0:0.01:0.99, 0.9999];
 
-% Index of completion probability in completion array
-iCompletion = find(completionArray == completion);
+% Calibrated completion probability
+gamma = 0.8;
 
-%% Compute average number of experiments under classical critical value from corrolary 1
+% Index of calibrated completion probability in array
+iGamma = find(gammaArray == gamma);
 
-experimentsClassicalArray = 1./(1 - (1 - significance) .* completionArray);
-experimentsClassical = experimentsClassicalArray(iCompletion);
+%% Apply equation (4) to compute the expected number of experiments with a  classical critical value
 
-%% Compute average number of experiments under robust critical value from corrolary 3
+NClassicalArray = 1./(1 - (1 - alpha) .* gammaArray);
+NClassical = NClassicalArray(iGamma);
 
-experimentsRobustArray = (1 - (significance .* completionArray)) ./ (1 - completionArray);
-experimentsRobust = experimentsRobustArray(iCompletion);
+%% Apply equation (10) to compute the expected number of experiments with a robust critical value
 
-%% Format plot
+NRobustArray = (1 - (alpha .* gammaArray)) ./ (1 - gammaArray);
+NRobust = NRobustArray(iGamma);
 
-formatPlot
+%% Format figure, axes, and plot
+
+visualDisplay
 
 %% Produce figure
 
-figure(1)
+figure(6)
 clf
 hold on
 
-% Plot average numbers of experiments
-plot(experimentsClassicalArray, experimentsRobustArray, purpleProperties{:})
-plot(experimentsClassical, experimentsRobust, scatterProperties{:})
-plot([0:0.1:20], [0:0.1:20], grayProperties{:})
+% Plot expected number of experiments
+plot(NClassicalArray, NRobustArray, blackLine{:})
+plot(NClassical, NRobust, blackDot{:})
+
+% Plot 45-degree line
+plot([0:0.1:20], [0:0.1:20], grayLine{:})
 
 % Populate axes
 set(gca, 'xLim', [1,11], 'xTick', [1:2:11])
 set(gca, 'yLim', [1,11], 'yTick', [1:2:11])
-xlabel('Experiments under classical critical value')
-ylabel('Experiments under robust critical value')
+xlabel('Experiments with classical critical value')
+ylabel('Experiments with robust critical value')
 
 % Print figure
 print('-dpdf','figure3B.pdf')
 
-%% Save results
+%% Save data
 
-file = 'figure3B.xlsx';
-sheet = 'Figure 3B';
+file = 'figure3B.csv';
 
 % Write header
-header = {'Completion probability', 'Number of experiments under classical critical value', 'Number of experiments under robust critical value'};
-writecell(header, file, 'Sheet', sheet, 'WriteMode', 'replacefile')
+header = {'Completion probability', 'Expected number of experiments with classical critical value', 'Expected number of experiments with robust critical value'};
+writecell(header, file, 'WriteMode', 'overwrite')
 
 % Write results
-result = [completionArray', experimentsClassicalArray', experimentsRobustArray'];
-writematrix(result, file, 'Sheet', sheet, 'WriteMode', 'append')
+result = [gammaArray', NClassicalArray', NRobustArray'];
+writematrix(result, file, 'WriteMode', 'append')
