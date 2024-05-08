@@ -28,7 +28,7 @@ The main script produces the individual figures using the following scripts:
 
 ### Display script
 
-The production scripts use the `visualDisplay.m` script to format figures, axes, and plots. The script is used to achieve a clear, effective visual display of the results.
+The production scripts use the `visualDisplay.m` script to format figures, axes, and plots. The formatting is designed to provide a clear visual display of the results.
 
 ## Figures
 
