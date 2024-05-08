@@ -1,6 +1,6 @@
 # Critical Values Robust to P-hacking: Code and Data
 
-This repository contains the code and data accompanying the paper "Critical Values Robust to P-hacking", written by [Adam McCloskey](https://adammccloskey.com) and [Pascal Michaillat](https://pascalmichaillat.org), and forthcoming in the Review of Economics and Statistics.
+This repository contains the code and data accompanying the paper "Critical Values Robust to P-hacking", written by [Adam McCloskey](https://adammccloskey.com) and [Pascal Michaillat](https://pascalmichaillat.org), and published in the [Review of Economics and Statistics](https://doi.org/10.1162/rest_a_01456) in April 2024.
 
 ## Paper webpage
 
