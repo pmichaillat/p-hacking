@@ -16,7 +16,7 @@ The main script, `run.m`, orchestrates the production of the 9 figures. The scri
 
 ### Production scripts
 
-The main script generates the individual figures using the following scripts:
+The main script produces the individual figures using the following scripts:
 
 + `figure1A.m` – Produce figure 1A
 + `figure1B.m` - Produce figure 1B
@@ -26,9 +26,9 @@ The main script generates the individual figures using the following scripts:
 + `figure3B.m` - Produce figure 3B
 + `figure4.m` - Produce figure 4A, figure 4B, and figure 4C
 
-### Visualization script
+### Display script
 
-The production scripts use the `visualDisplay.m` script to format figures, axes, and plots for clear visualization of the results.
+The production scripts use the `visualDisplay.m` script to format figures, axes, and plots. The script is used to achieve a clear, effective visual display of the results.
 
 ## Figures
 
